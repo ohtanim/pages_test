@@ -45,9 +45,12 @@ jobs:
         run: doxygen ../../cxx_example/Doxyfile
       - name: Copy
         run: |
-            mkdir _site
-            cp -R target/doc _site/rust
-            cp -R target/cxxbridge/doxygen/html _site/cxx
+            mkdir -p _site/rust
+            (cd target/doc; tar cvf - .) | (cd _site/rust;tar xvf -)
+            mkdir -p _site/cxx
+            (cd target/cxxbridge/doxygen/html; tar cvf - .) | (cd _site/cxx;tar xvf -)
+            # cp -R target/doc _site/rust
+            # cp -R target/cxxbridge/doxygen/html _site/cxx
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         
