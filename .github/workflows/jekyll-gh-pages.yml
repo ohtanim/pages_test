@@ -40,17 +40,16 @@ jobs:
         working-directory: cxx_example
         run: |
            cargo build --release
-
       - name: Doxygen
         working-directory: target/cxxbridge
         run: doxygen ../../cxx_example/Doxyfile
- 
+      - name: Copy
+        run: |
+            mkdir _site
+            cp -R target/doc _site/rust
+            cp -R target/cxxbridge/doxygen/html _site/cxx
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-            path: |
-                target/doc
-                target/cxxbridge/doxygen
+        uses: actions/upload-pages-artifact@v3
         
   # Deployment job
   deploy:
