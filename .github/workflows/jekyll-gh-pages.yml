@@ -45,7 +45,7 @@ jobs:
 
       - name: Doxygen
         working-directory: target/cxxbridge
-        run: doxygen ../../cxxbridge/Doxyfile
+        run: doxygen ../../cxx_example/Doxyfile
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
