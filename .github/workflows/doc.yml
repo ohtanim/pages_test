@@ -35,4 +35,4 @@ jobs:
 
     - name: Doxygen
       working-directory: target/cxxbridge
-      run: doxygen ../../cxxbridge/Doxyfile
+      run: doxygen ../../cxx_example/Doxyfile
