@@ -36,6 +36,10 @@ jobs:
       - name: Rustdoc
         working-directory: rs_example
         run: cargo doc --no-deps
+      - name: Copy Rustdoc
+        run: |
+            mkdir -p _site/rust
+            (cd target/doc; tar cvf - .) | (cd _site/rust;tar xvf -)
       - name: Build cxxbridge
         working-directory: cxx_example
         run: |
@@ -43,14 +47,10 @@ jobs:
       - name: Doxygen
         working-directory: target/cxxbridge
         run: doxygen ../../cxx_example/Doxyfile
-      - name: Copy
+      - name: Copy Doxygen
         run: |
-            mkdir -p _site/rust
-            (cd target/doc; tar cvf - .) | (cd _site/rust;tar xvf -)
             mkdir -p _site/cxx
             (cd target/cxxbridge/doxygen/html; tar cvf - .) | (cd _site/cxx;tar xvf -)
-            # cp -R target/doc _site/rust
-            # cp -R target/cxxbridge/doxygen/html _site/cxx
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         
