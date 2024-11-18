@@ -34,10 +34,6 @@ jobs:
       - name: Rustdoc
         working-directory: rs_example
         run: cargo doc --no-deps
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-            path: target/doc
       - name: Build cxxbridge
         working-directory: cxx_example
         run: |
@@ -46,6 +42,10 @@ jobs:
       - name: Doxygen
         working-directory: target/cxxbridge
         run: doxygen ../../cxx_example/Doxyfile
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            path: target
         
   # Deployment job
   deploy:
