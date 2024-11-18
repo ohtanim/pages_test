@@ -1,0 +1,10 @@
+[workspace]
+members = [ "cxx_example",
+    "rs_example",
+    "cxx_example",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.1"
+edition = "2021"

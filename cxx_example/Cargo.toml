@@ -1,0 +1,15 @@
+[package]
+name = "cxx_example"
+version.workspace = true
+edition.workspace = true
+build = "build.rs"
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+cxx = "1.0"
+rs_example = { path = "../rs_example" }
+
+[build-dependencies]
+cxx-build = "1.0"
