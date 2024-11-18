@@ -28,16 +28,29 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install doxygen -y
+        shell: bash
+      - name: Rustdoc
+        working-directory: rs_example
+        run: cargo doc --no-deps
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+            path: target/doc
+      - name: Build cxxbridge
+        working-directory: cxx_example
+        run: |
+           cargo build --release
 
+      - name: Doxygen
+        working-directory: target/cxxbridge
+        run: doxygen ../../cxxbridge/Doxyfile
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+            path: target/cxxbridge/api-docs
+        
   # Deployment job
   deploy:
     environment:
